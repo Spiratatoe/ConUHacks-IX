@@ -1,10 +1,11 @@
 import { ObjectId } from "mongodb";
 
-export default class user {
+export default class User {
   constructor(
-    public id: ObjectId,
+    public _id: ObjectId,
     public email: string,
     public password: string,
     public name: string,
+    public data?: any,
   ) { }
 }
