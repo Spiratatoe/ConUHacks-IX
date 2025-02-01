@@ -7,8 +7,6 @@ const router: Router = Router();
 
 router.post('/signup', async (req: Request, res: Response) => {
 
-  console.log(req.body);
-
   const email: string = req.body.email as string;
   const password: string = req.body.password as string;
   const name: string = req.body.name as string;
