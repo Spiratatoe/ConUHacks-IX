@@ -10,6 +10,10 @@ William Picard
 
 # A look at our front-end 
 
+short video demo :\
+https://vimeo.com/1052757224?share=copy 
+
+
 ## home and login page
 <img width="763" alt="Screenshot 2025-02-02 at 2 57 05 AM" src="https://github.com/user-attachments/assets/9e1db671-98ad-430f-b387-10c3f4b05736" />
 
