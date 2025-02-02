@@ -10,7 +10,7 @@ William Picard\
 
 ## A look at our front-end 
 
-#home and login page
+# home and login page
 <img width="763" alt="Screenshot 2025-02-02 at 2 57 05 AM" src="https://github.com/user-attachments/assets/9e1db671-98ad-430f-b387-10c3f4b05736" />\
 
 <img width="580" alt="Screenshot 2025-02-02 at 2 57 24 AM" src="https://github.com/user-attachments/assets/8182907a-7341-433d-9a5b-779396039dff" />\
