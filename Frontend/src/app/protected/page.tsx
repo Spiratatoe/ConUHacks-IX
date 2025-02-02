@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import ChartComponent from "../components/ChartComponent"; // ✅ Import Chart Component
 
-export default function ProtectedPage() {
+export default function Dashboard() {
     const [user, setUser] = useState<{ email: string } | null>(null);
     const router = useRouter();
 
@@ -21,11 +22,18 @@ export default function ProtectedPage() {
     }, []);
 
     return (
-        <div className="flex h-screen bg-black">
-            <div className="w-screen h-screen flex flex-col space-y-5 justify-center items-center text-white">
-                {user ? `You are logged in as ${user.email}` : "Loading..."}
-                <SignOut />
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-6">
+            <h1 className="text-2xl font-bold mb-6">
+                {user ? `Welcome, ${user.email}!` : "Loading..."}
+            </h1>
+
+            {/* 📊 Financial Chart Section */}
+            <div className="w-full max-w-3xl bg-gray-800 p-6 rounded-lg shadow-lg">
+                <ChartComponent />
             </div>
+
+            {/* 🔴 Logout Button */}
+            <SignOut />
         </div>
     );
 }
@@ -39,8 +47,11 @@ function SignOut() {
     };
 
     return (
-        <button onClick={handleSignOut} className="mt-4 bg-red-500 p-2 rounded">
-            Sign out
+        <button
+            onClick={handleSignOut}
+            className="mt-6 bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg shadow-lg transition-all"
+        >
+            Sign Out
         </button>
     );
 }
