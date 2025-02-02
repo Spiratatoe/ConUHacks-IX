@@ -26,7 +26,7 @@ export default function Login() {
         if (response.ok) {
             const userId = await response.text();
             localStorage.setItem("userId", userId);
-            router.push("/Chart");
+            router.push("/dashboard");
         } else {
             setError("Invalid email or password");
         }
