@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-
+import { useRouter } from 'next/navigation';
 
 interface Message {
     content: string;
@@ -12,11 +12,49 @@ const ChatInterface = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputMessage, setInputMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [socket, setSocket] = useState<WebSocket | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
+
+    useEffect(() => {
+        // Initialize WebSocket connection
+        const ws = new WebSocket('ws://localhost:3002');
+
+        ws.onopen = () => {
+            console.log('Connected to WebSocket');
+        };
+
+        ws.onmessage = (event) => {
+            const aiMessage: Message = {
+                content: event.data,
+                sender: 'ai'
+            };
+            setMessages(prev => [...prev, aiMessage]);
+            setIsLoading(false);
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            setIsLoading(false);
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket connection closed');
+        };
+
+        setSocket(ws);
+
+        // Cleanup function to close WebSocket when component unmounts
+        return () => {
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.close();
+            }
+        };
+    }, []); // Empty dependency array means this effect runs once on mount
 
     useEffect(() => {
         scrollToBottom();
@@ -24,7 +62,7 @@ const ChatInterface = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!inputMessage.trim()) return;
+        if (!inputMessage.trim() || !socket) return;
 
         // Add user message
         const userMessage: Message = {
@@ -35,33 +73,11 @@ const ChatInterface = () => {
         setInputMessage('');
         setIsLoading(true);
 
-        try {
-            // Replace with your actual API endpoint
-            const response = await fetch('http://localhost:3000/api/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ message: inputMessage }),
-            });
-
-            const data = await response.json();
-
-            // Add AI response
-            const aiMessage: Message = {
-                content: data.response,
-                sender: 'ai'
-            };
-            setMessages(prev => [...prev, aiMessage]);
-        } catch (error) {
-            console.error('Error:', error);
-            // Add error message
-            const errorMessage: Message = {
-                content: 'Sorry, I encountered an error. Please try again.',
-                sender: 'ai'
-            };
-            setMessages(prev => [...prev, errorMessage]);
-        } finally {
+        // Send message through WebSocket
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(inputMessage);
+        } else {
+            console.error('WebSocket is not connected');
             setIsLoading(false);
         }
     };
