@@ -4,11 +4,12 @@ import dotenv from 'dotenv';
 import express, { Application, Request, Response } from 'express';
 import WebSocket from 'ws';
 
-import userRoutes from './routes/userRoutes';
+import userRoutes from './routes/user.routes';
 import errorHandler from './middlewares/errorHandler';
 import { connect } from './services/database.service';
-import { handleAiPrompt } from './services/handleAiPrompt.service';
+import { handleAiPrompt, tipOfTheDay } from './services/ai.service';
 import { chatPrompt } from './services/AiPromptRestrictions';
+import aiRoutes from './routes/ai.routes';
 
 const HTTP_PORT = 3000;
 const WS_PORT = 3002;
@@ -29,6 +30,7 @@ const webServer = async () => {
   app.use(bodyParser.json());
 
   app.use('/api', userRoutes);
+  app.use('/api/ai', aiRoutes);
 
   app.listen(HTTP_PORT, () => {
     console.log(`Server is running on http://localhost:${HTTP_PORT}`);
