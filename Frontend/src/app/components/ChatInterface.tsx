@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface Message {
     content: string;
@@ -82,24 +83,40 @@ const ChatInterface = () => {
         }
     };
 
+    const handleBackToDashboard = () => {
+        // Close WebSocket connection if it's open
+        if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.close();
+        }
+    };
+
     return (
-        <div className="flex h-screen w-screen items-center justify-center bg-gray-50">
-            <div className="z-10 w-full max-w-2xl h-[600px] overflow-hidden rounded-2xl border border-gray-100 shadow-xl bg-white">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-50 overflow-hidden">
+            {/* Back to Dashboard button */}
+            <Link
+                href="/dashboard"
+                onClick={handleBackToDashboard}
+                className="fixed top-4 left-4 w-48 px-4 py-2 text-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-50 transition-colors"
+            >
+                Back to Dashboard
+            </Link>
+
+            <div className="w-full max-w-2xl h-full max-h-screen md:h-[600px] overflow-hidden rounded-none md:rounded-2xl border border-gray-100 shadow-xl bg-white">
                 {/* Header */}
-                <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 bg-white px-4 py-6 pt-8 text-center sm:px-16">
+                <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 bg-white px-4 py-4 sm:px-16">
                     <h3 className="text-xl font-semibold">AI Assistant</h3>
                     <p className="text-sm text-gray-500">Chat with our AI assistant</p>
                 </div>
 
                 {/* Chat Messages */}
-                <div className="flex flex-col h-[400px] overflow-y-auto bg-gray-50 px-4 py-4 sm:px-16">
+                <div className="flex flex-col flex-grow h-[calc(100%-200px)] overflow-y-auto bg-gray-50 px-4 py-4 sm:px-16">
                     {messages.map((message, index) => (
                         <div
                             key={index}
                             className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} mb-4`}
                         >
                             <div
-                                className={`rounded-lg px-4 py-2 max-w-[80%] ${
+                                className={`rounded-lg px-4 py-2 max-w-[80%] break-words ${
                                     message.sender === 'user'
                                         ? 'bg-black text-white'
                                         : 'bg-gray-200 text-gray-900'
