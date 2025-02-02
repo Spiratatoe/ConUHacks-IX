@@ -13,12 +13,22 @@ export default function Dashboard() {
 
         const [name, setName] = useState('');
         const [error, setError] = useState('');
+        const [cumulativeEarnings, setCumulativeEarnings] = useState({} as any);
+        const [cumulativeSpendings, setCumulativeSpendings] = useState({} as any);
+        const [spending, setSpending] = useState(0);
+        const [earningsPrior, setEarningsPrior] = useState(0);
+        const [spendingPrior, setSpendingPrior] = useState(0);
     
         useEffect(() => {
             // Fetch the user's name when the component mounts
             const fetchUserName = async () => {
                 try {
                     const userID = localStorage.getItem('userId')?.replace('"', '')?.replace('"', '');
+                    if (!userID) {
+                        setError('User ID not found in local storage');
+                        return;
+                    }
+
                     const response = await fetch(`http://localhost:3000/api/user/${userID}`, {
                         method: 'GET',
                         headers: {
@@ -30,6 +40,18 @@ export default function Dashboard() {
                     if (response.ok) {
                         const data = await response.json();
                         setName(data.name); // Set the name in state
+                        setCumulativeEarnings(data.data.cumulativeEarnings);
+                        setCumulativeSpendings(data.data.cumulativeSpendings);
+                        // variables for calcualting monthly spending 
+                        const spend_cal_1 = data.data.cumulativeEarnings[2024][1];
+                        const spend_cal_2 = data.data.cumulativeSpendings[2024][1];
+                        setSpending(spend_cal_1 - spend_cal_2 );
+                        // variables to get monthly difference
+                        const earnPrior = ((data.data.cumulativeEarnings[2024][0] - data.data.cumulativeEarnings[2024][1]) /100).toFixed(2);
+                        setEarningsPrior(parseFloat(earnPrior));
+                        const spendPrior = ((data.data.cumulativeSpendings[2024][0]- data.data.cumulativeSpendings[2024][1]) /100).toFixed(2);
+                        setSpendingPrior(parseFloat(spendPrior));
+                        
                     } else {
                         const errorData = await response.json();
                         setError(errorData.message || 'Failed to fetch user data');
@@ -45,41 +67,42 @@ export default function Dashboard() {
     
   return (
     <div>
-        <div>
+        <div className='welcome_container'>
         <p className='welcome_banner'>Welcome, {name}!</p>
-        </div>
+        
 
         <Link
-          href="/login"
+          href="/AiChat"
           className="rounded-full mb-[30px] border border-solid border-[#eaab00] dark:border-white/[.145] transition-colors flex items-center justify-center justify-self-center hover:bg-[#eaab00] dark:hover:bg-[#1a1a1a]  hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44 w-[400px]"
         >
           Speak with Finance Robro
         </Link>
+        </div>
 
     <div className='financial_container'>
         <div className='financial_box'>
 
         <p className='titles_formatting'>monthly earnings</p>
-        <p className='numbers_formatting'>30 576 $</p>
-
+        <p className='numbers_formatting'>{cumulativeEarnings["2024"] ? cumulativeEarnings["2024"][1] : 0} $</p>
+        <p className='percentage_formatting'>{earningsPrior} % from last month</p>
         </div>
         <div className='financial_box'>
 
         <p className='titles_formatting'>monthly spendings</p>
-        <p className='numbers_formatting_negative'>20 576 $</p> 
-
+        <p className='numbers_formatting_negative'>{cumulativeSpendings["2024"] ? cumulativeSpendings["2024"][1] : 0} $</p> 
+        <p className='percentage_formatting'>{spendingPrior} % from last month</p>
         </div>
         <div className='financial_box'>
 
         <p className='titles_formatting'>savings</p>
-        <p className='numbers_formatting'>350 576 $</p>
+        <p className='numbers_formatting'>#### $</p>
 
 
         </div>
         <div className='financial_box'>
 
-        <p className='titles_formatting'>overview</p>
-        <p className='numbers_formatting'>350 276 $</p>
+        <p className='titles_formatting'>monthly overview</p>
+        <p className='numbers_formatting_display'>{spending} $</p>
 
         </div>
 
