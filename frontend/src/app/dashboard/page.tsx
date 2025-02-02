@@ -19,6 +19,7 @@ export default function Dashboard() {
         const [earningsPrior, setEarningsPrior] = useState(0);
         const [spendingPrior, setSpendingPrior] = useState(0);
         const [savingsPrior, setSavingsPrior] = useState(0);
+        const [tip, setTip] = useState('');
     
         useEffect(() => {
             // Fetch the user's name when the component mounts
@@ -31,6 +32,14 @@ export default function Dashboard() {
                     }
 
                     const response = await fetch(`http://localhost:3000/api/user/${userID}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include the auth token if required
+                        },
+                    });
+
+                    const tipResponse = await fetch(`http://localhost:3000/api/ai/tipOfTheDay`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -57,6 +66,13 @@ export default function Dashboard() {
                         const spendPrior = ((data.data.cumulativeSpendings[2024][0]- data.data.cumulativeSpendings[2024][1]) /100).toFixed(2);
                         setSpendingPrior(parseFloat(spendPrior));
                         
+                        if (tipResponse.ok) {
+                            const tipData = await tipResponse.text();
+                            setTip(tipData);
+                        }
+
+                        
+                        
                     } else {
                         const errorData = await response.json();
                         setError(errorData.message || 'Failed to fetch user data');
@@ -74,7 +90,11 @@ export default function Dashboard() {
     <div>
         <div className='welcome_container'>
         <p className='welcome_banner'>Welcome, {name}!</p>
-        
+
+        <div className='tip_banner'>
+        <p className="text-3xl font-bold mb-4 ">Tip of the day:</p>
+        <p >{tip} </p>
+        </div>
 
         <Link
           href="/AiChat"
