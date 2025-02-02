@@ -6,6 +6,7 @@ import './dash.css'
 
 
 import React, { useEffect, useState } from 'react';
+import { parse } from 'path';
 
 
 
@@ -15,9 +16,10 @@ export default function Dashboard() {
         const [error, setError] = useState('');
         const [cumulativeEarnings, setCumulativeEarnings] = useState({} as any);
         const [cumulativeSpendings, setCumulativeSpendings] = useState({} as any);
-        const [spending, setSpending] = useState(0);
+        const [savings, setSavings] = useState(0);
         const [earningsPrior, setEarningsPrior] = useState(0);
         const [spendingPrior, setSpendingPrior] = useState(0);
+        const [savingsPrior, setSavingsPrior] = useState(0);
     
         useEffect(() => {
             // Fetch the user's name when the component mounts
@@ -45,7 +47,11 @@ export default function Dashboard() {
                         // variables for calcualting monthly spending 
                         const spend_cal_1 = data.data.cumulativeEarnings[2024][1];
                         const spend_cal_2 = data.data.cumulativeSpendings[2024][1];
-                        setSpending(spend_cal_1 - spend_cal_2 );
+                        setSavings(spend_cal_1 - spend_cal_2 );
+                        // variables for calcualting monthly spending Prior
+                        const spend_cal_3 = data.data.cumulativeEarnings[2024][0];
+                        const spend_cal_4 = data.data.cumulativeSpendings[2024][0];
+                        setSavingsPrior( parseFloat(((spend_cal_3 - spend_cal_4)/100 ).toFixed(2)));
                         // variables to get monthly difference
                         const earnPrior = ((data.data.cumulativeEarnings[2024][0] - data.data.cumulativeEarnings[2024][1]) /100).toFixed(2);
                         setEarningsPrior(parseFloat(earnPrior));
@@ -102,7 +108,8 @@ export default function Dashboard() {
         <div className='financial_box'>
 
         <p className='titles_formatting'>monthly overview</p>
-        <p className='numbers_formatting_display'>{spending} $</p>
+        <p className='numbers_formatting_display'>{savings} $</p>
+        <p className='percentage_formatting'>{savingsPrior} % from last month</p>
 
         </div>
 
