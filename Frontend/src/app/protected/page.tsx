@@ -7,19 +7,19 @@ export default function Dashboard() {
     const [user, setUser] = useState<{ email: string } | null>(null);
     const router = useRouter();
 
-    useEffect(() => {
-        const userId = localStorage.getItem("userId");
+    // useEffect(() => {
+    //     const userId = localStorage.getItem("userId");
 
-        if (!userId) {
-            router.push("/login"); // 🔄 Redirect if not logged in
-            return;
-        }
+    //     if (!userId) {
+    //         router.push("/login"); // 🔄 Redirect if not logged in
+    //         return;
+    //     }
 
-        fetch(`http://localhost:3000/api/user/${userId}`)
-            .then((res) => res.json())
-            .then((data) => setUser(data))
-            .catch(() => router.push("/login"));
-    }, []);
+    //     fetch(`http://localhost:3000/api/user/${userId}`)
+    //         .then((res) => res.json())
+    //         .then((data) => setUser(data))
+    //         .catch(() => router.push("/login"));
+    // }, []);
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-6">
