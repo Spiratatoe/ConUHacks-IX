@@ -13,6 +13,9 @@ William Picard
 short video demo :\
 https://vimeo.com/1052757224?share=copy 
 
+our slides:\
+https://www.canva.com/design/DAGd910RUaw/fJhk9jxkR9cLlV928_xv4Q/view?utm_content=DAGd910RUaw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h0b979f347b
+
 
 ## home and login page
 <img width="763" alt="Screenshot 2025-02-02 at 2 57 05 AM" src="https://github.com/user-attachments/assets/9e1db671-98ad-430f-b387-10c3f4b05736" />
