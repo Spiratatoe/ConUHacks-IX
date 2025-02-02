@@ -48,31 +48,56 @@ export default function Dashboard() {
         <div>
         <p className='welcome_banner'>Welcome, {name}!</p>
         </div>
+
+        <Link
+          href="/login"
+          className="rounded-full mb-[30px] border border-solid border-[#eaab00] dark:border-white/[.145] transition-colors flex items-center justify-center justify-self-center hover:bg-[#eaab00] dark:hover:bg-[#1a1a1a]  hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44 w-[400px]"
+        >
+          Speak with Finance Robro
+        </Link>
+
     <div className='financial_container'>
         <div className='financial_box'>
 
-        <p>monthly earnings</p>
+        <p className='titles_formatting'>monthly earnings</p>
+        <p className='numbers_formatting'>30 576 $</p>
 
         </div>
         <div className='financial_box'>
 
-        <p>monthly spendings</p>
+        <p className='titles_formatting'>monthly spendings</p>
+        <p className='numbers_formatting_negative'>20 576 $</p> 
 
         </div>
         <div className='financial_box'>
 
-        <p>savings</p>
+        <p className='titles_formatting'>savings</p>
+        <p className='numbers_formatting'>350 576 $</p>
 
 
         </div>
         <div className='financial_box'>
 
-        <p>overview</p>
+        <p className='titles_formatting'>overview</p>
+        <p className='numbers_formatting'>350 276 $</p>
+
+        </div>
+
+        <div className='financial_box_graph'>
+
+        <p className='titles_formatting'>graph view</p>
+        <p className='numbers_formatting'>##################</p>
 
         </div>
 
 
     </div>
+    <Link
+          href="/login"
+          className="rounded-full mb-[20px] border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center justify-self-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44 max-w-[200px]"
+        >
+          Log Out
+        </Link>
     </div>
 
   );
