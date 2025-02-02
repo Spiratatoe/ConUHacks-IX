@@ -10,7 +10,7 @@ export function Form({
   return (
       <form
           onSubmit={onSubmit} // 🔄 Use `onSubmit` instead of `action`
-          className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 sm:px-16"
+          className="flex flex-col space-y-4 bg-gray-50 px-4 pt-8 pb-2 sm:px-16"
       >
         <div>
           <label

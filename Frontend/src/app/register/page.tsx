@@ -19,7 +19,7 @@ export default function RegisterPage() {
         const email = formData.get("email") as string;
         const password = formData.get("password") as string;
 
-        const response = await fetch('http://localhost:3000/api/signup', {
+        const response = await fetch(`http://localhost:3000/api/signup`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, password }),
@@ -44,7 +44,7 @@ export default function RegisterPage() {
                     <SubmitButton>Sign Up</SubmitButton>
                 </Form>
                 {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-                <p className="text-center text-sm text-gray-600">
+                <p className="text-center text-sm text-gray-600 py-3">
                     {'Already have an account? '}
                     <Link href="/login" className="font-semibold text-gray-800">
                         Sign in

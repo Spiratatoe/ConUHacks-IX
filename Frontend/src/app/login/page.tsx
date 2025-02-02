@@ -26,7 +26,7 @@ export default function Login() {
         if (response.ok) {
             const userId = await response.text();
             localStorage.setItem("userId", userId);
-            router.push("/protected");
+            router.push("/Chart");
         } else {
             setError("Invalid email or password");
         }
@@ -44,7 +44,7 @@ export default function Login() {
                     <SubmitButton>Sign in</SubmitButton>
                 </Form>
                 {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-                <p className="text-center text-sm text-gray-600">
+                <p className="text-center text-sm text-gray-600 py-3">
                     {"Don't have an account? "}
                     <Link href="/register" className="font-semibold text-gray-800">
                         Sign up
