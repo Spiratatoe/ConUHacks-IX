@@ -15,7 +15,7 @@ export default function Dashboard() {
             return;
         }
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${userId}`)
+        fetch(`http://localhost:3000/api/user/${userId}`)
             .then((res) => res.json())
             .then((data) => setUser(data))
             .catch(() => router.push("/login"));

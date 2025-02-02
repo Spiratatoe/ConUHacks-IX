@@ -19,7 +19,7 @@ export default function RegisterPage() {
         const email = formData.get("email") as string;
         const password = formData.get("password") as string;
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
+        const response = await fetch('http://localhost:3000/api/signup', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, password }),
