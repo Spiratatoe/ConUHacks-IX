@@ -99,7 +99,7 @@ const ChatInterface = () => {
                 onClick={handleBackToDashboard}
                 className="fixed top-4 left-4 w-48 px-4 py-2 text-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-50 transition-colors"
             >
-                Back to Dashboard
+                ← Back to Dashboard
             </Link>
 
             <div className="w-full max-w-2xl h-full max-h-screen md:h-[600px] overflow-hidden rounded-none md:rounded-2xl border border-gray-100 shadow-xl bg-white">
