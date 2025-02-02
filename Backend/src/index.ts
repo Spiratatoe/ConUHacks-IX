@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser';
+import cors from "cors";
 import dotenv from 'dotenv';
 import express, { Application, Request, Response } from 'express';
 import WebSocket from 'ws';
@@ -7,7 +8,6 @@ import userRoutes from './routes/userRoutes';
 import errorHandler from './middlewares/errorHandler';
 import { connect } from './services/database.service';
 import { handleAiPrompt } from './services/handleAiPrompt.service';
-
 
 const HTTP_PORT = 3000;
 const WS_PORT = 3002;
@@ -23,6 +23,7 @@ const startServer = async () => {
 const webServer = async () => {
   const app: Application = express();
 
+  app.use(cors());
   app.use(errorHandler);
   app.use(bodyParser.json());
 

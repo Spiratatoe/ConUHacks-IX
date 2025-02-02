@@ -16,8 +16,15 @@ export const connect = async () => {
   await client.connect();
 
   const db = client.db(process.env.DB_NAME);
+
+  // Check if the users collection exists, if not create it
+  const collectionsList = await db.listCollections({ name: "users" }).toArray();
+  if (collectionsList.length === 0) {
+    await db.createCollection("users");
+    console.log("Created 'users' collection");
+  }
+
   collections.users = db.collection("users");
 
   console.log(`Successfully connected to database: ${db.databaseName}`);
-
 }
