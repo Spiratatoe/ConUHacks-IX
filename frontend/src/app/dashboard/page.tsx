@@ -7,8 +7,7 @@ import './dash.css'
 
 import React, { useEffect, useState } from 'react';
 import { parse } from 'path';
-
-
+import PieChart from "../components/PieChart";
 
 export default function Dashboard() {
 
@@ -85,46 +84,47 @@ export default function Dashboard() {
         </Link>
         </div>
 
-    <div className='financial_container'>
-        <div className='financial_box'>
+        <div className='financial_container'>
+            <div className='financial_box'>
 
-        <p className='titles_formatting'>monthly earnings</p>
-        <p className='numbers_formatting'>{cumulativeEarnings["2024"] ? cumulativeEarnings["2024"][1] : 0} $</p>
-        <p className='percentage_formatting'>{earningsPrior} % from last month</p>
+                <p className='titles_formatting'>monthly earnings</p>
+                <p className='numbers_formatting'>{cumulativeEarnings["2024"] ? cumulativeEarnings["2024"][1] : 0} $</p>
+                <p className='percentage_formatting'>{earningsPrior} % from last month</p>
+            </div>
+            <div className='financial_box'>
+
+                <p className='titles_formatting'>monthly spendings</p>
+                <p className='numbers_formatting_negative'>{cumulativeSpendings["2024"] ? cumulativeSpendings["2024"][1] : 0} $</p>
+                <p className='percentage_formatting'>{spendingPrior} % from last month</p>
+            </div>
+            <div className='financial_box'>
+
+                <p className='titles_formatting'>savings</p>
+                <p className='numbers_formatting'>#### $</p>
+
+
+            </div>
+            <div className='financial_box'>
+
+                <p className='titles_formatting'>monthly overview</p>
+                <p className='numbers_formatting_display'>{savings} $</p>
+                <p className='percentage_formatting'>{savingsPrior} % from last month</p>
+
+            </div>
+            <div className='financial_box_graph'>
+                <Link href="/pie-chart" className="flex items-center justify-center w-full h-full cursor-pointer">
+                    <div className="w-80 sm:w-96">
+                        <PieChart/>
+                    </div>
+                </Link>
+            </div>
+
+
+
         </div>
-        <div className='financial_box'>
-
-        <p className='titles_formatting'>monthly spendings</p>
-        <p className='numbers_formatting_negative'>{cumulativeSpendings["2024"] ? cumulativeSpendings["2024"][1] : 0} $</p> 
-        <p className='percentage_formatting'>{spendingPrior} % from last month</p>
-        </div>
-        <div className='financial_box'>
-
-        <p className='titles_formatting'>savings</p>
-        <p className='numbers_formatting'>#### $</p>
-
-
-        </div>
-        <div className='financial_box'>
-
-        <p className='titles_formatting'>monthly overview</p>
-        <p className='numbers_formatting_display'>{savings} $</p>
-        <p className='percentage_formatting'>{savingsPrior} % from last month</p>
-
-        </div>
-
-        <div className='financial_box_graph'>
-
-        <p className='titles_formatting'>graph view</p>
-        <p className='numbers_formatting'>##################</p>
-
-        </div>
-
-
-    </div>
-    <Link
-          href="/login"
-          className="rounded-full mb-[20px] border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center justify-self-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44 max-w-[200px]"
+        <Link
+            href="/login"
+            className="rounded-full mb-[20px] border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center justify-self-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44 max-w-[200px]"
         >
           Log Out
         </Link>
