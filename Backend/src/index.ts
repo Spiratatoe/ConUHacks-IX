@@ -8,6 +8,7 @@ import userRoutes from './routes/userRoutes';
 import errorHandler from './middlewares/errorHandler';
 import { connect } from './services/database.service';
 import { handleAiPrompt } from './services/handleAiPrompt.service';
+import { chatPrompt } from './services/AiPromptRestrictions';
 
 const HTTP_PORT = 3000;
 const WS_PORT = 3002;
@@ -36,21 +37,17 @@ const webServer = async () => {
 
 const webSocket = async () => {
   const wss = new WebSocket.Server({ port: WS_PORT });
-  
-  wss.on('connection', (ws: WebSocket) => {
-    console.log('New client connected');
 
-    // Initialize chat history for this client
-    const chatHistory: any[] = [];
+  wss.on('connection', (ws: WebSocket) => {
+
+    const chatHistory: any[] = [{ role: 'system', content: chatPrompt }];
 
     ws.on('message', (data: WebSocket.RawData) => {
       const message = data.toString();
-      console.log(`Received message: ${message}`);
       handleAiPrompt(ws, message, chatHistory);
     });
 
     ws.on('close', () => {
-      console.log('Client disconnected');
     });
   });
 

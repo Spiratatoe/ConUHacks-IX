@@ -6,6 +6,16 @@ export default class User {
     public email: string,
     public password: string,
     public name: string,
-    public data?: any,
+    public data?: {
+      cumulativeEarnings: { [year: number]: number[] },
+      cumulativeSpendings: { [year: number]: number[] },
+
+      spending: {
+        categories: {
+          name: string, amount: number
+        }[],
+      },
+      [key: string]: any
+    }
   ) { }
 }

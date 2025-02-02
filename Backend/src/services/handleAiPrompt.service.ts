@@ -1,14 +1,15 @@
 import { WebSocket } from 'ws';
 import ollama, { ChatRequest, ChatResponse, Message } from 'ollama';
 
+const model = 'llama3.2:1b';
+// const model = 'qwen2.5:1.5b';
+
 export const handleAiPrompt = async (ws: WebSocket, message: string, chatHistory: any[]) => {
   chatHistory.push({ role: 'user', content: message });
 
-  console.log(chatHistory);
-
   try {
     const response: ChatResponse = await ollama.chat({
-      model: 'llama3.2:1b',
+      model,
       messages: chatHistory,
     });
     
